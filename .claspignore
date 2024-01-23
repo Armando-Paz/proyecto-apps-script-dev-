@@ -1,2 +1,2 @@
 tailwind.config.js
-node_module/**
+node_modules/**
