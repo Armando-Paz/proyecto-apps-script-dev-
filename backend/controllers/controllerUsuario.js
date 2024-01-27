@@ -1,9 +1,9 @@
-function guardarUsuario(usuario) {
+function RegistrarUsuario(usuario) {
     // desestructurando los datos de objeto usuario que esta recibiendo
     Logger.log(usuario);
     try {
-        const { 
-            //usuario_id,
+        const {
+            usuario_id = generarIdUnico2(),
             usuario_email,
             usuario_nombres,
             usuario_apellidos,
@@ -18,24 +18,41 @@ function guardarUsuario(usuario) {
             // usuario_nacimiento,
             // usuario_edad 
         } = usuario;
-        const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
-        sheetUsuarios.appendRow([
-         
-            usuario_nombres,
-            usuario_apellidos,
-            usuario_email,
-            usuario_password]
-        );
 
-        return {
-            titulo:"Registro exitoso",
+        //var dta = JSON.parse(datosActualizar)
+        //console.log(dta);
+        var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": usuario_email, "nameId": "usuario_email" }
+        Logger.log(datosvalidar);
+        const resulta = JSON.parse(findDataById(datosvalidar));
+        var status =resulta.status;
+        Logger.log(resulta);
+        if (status.code != 302) {
+            Logger.log(env_().SH_REGISTRO_USUARIO);
+            const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
+            sheetUsuarios.appendRow([
+                usuario_id,
+                usuario_email,
+                usuario_nombres,
+                usuario_apellidos,
+                usuario_password
+            ]
+            );
+            Logger.log("despues de grabar");
+
+            return {
+                titulo: "Registro exitoso",
+            }
+        }else{
+            return {
+                titulo: "Registro no exitoso : email ya existe ",
+            }
         }
     } catch (error) {
         return {
-            titulo:"Ops ha ocurrido un error! " +error,
+            titulo: "Ops ha ocurrido un error! " + error,
         }
     }
-   
+
 
 
 }
