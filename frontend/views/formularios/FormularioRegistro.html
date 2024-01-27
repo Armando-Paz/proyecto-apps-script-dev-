@@ -1,0 +1,68 @@
+//<script type="text/jsx">
+
+function FormularioRegistro() {
+    const guardarFormulario = (datosFormulario) => {
+        console.log(datosFormulario);
+
+    }
+    return (
+
+        <div className="px-20">
+            <h2 className="text-center font-bold text-xl my-6">Registrarse</h2>
+            <Form name="basic"
+                onFinish={guardarFormulario}
+                layout="vertical">
+
+                <Item
+                    name="apellidos"
+                    label="Apellidos"
+                    rules={[
+    
+                        { required: true, message: "el campo de Apellidos  es Requerido para el registro" }
+                    ]}
+                    >
+                    <Input />
+                </Item>
+                <Item 
+                name="nombres" 
+                label="Nombres"
+                    rules={[
+
+                        { required: true, message: "el campo de Nombres es Requerido para el registro" }
+                    ]}
+                >
+                    <Input />
+                </Item>
+
+                <Item
+                    name="correo"
+                    label="Email"
+                    rules={[
+                        { type: "email", message: "el formato no corresponde a un email" },
+                        { required: true, message: "el campo de correo es Requerido para el registro" }
+                    ]}
+                >
+                    <Input />
+                </Item>
+                <Item 
+                name="contrasenia" 
+                label="Contraseña"
+                    rules={[
+
+                        { required: true, message: "el campo de contraseña es Requerido para el registro" }
+                    ]}
+                >
+                    <Password />
+                </Item>
+                <Item >
+                    <Button type="primary" htmlType="submit">Guardar</Button>
+                </Item>
+            </Form>
+        </div>
+
+
+    );
+}
+
+
+//</script>
