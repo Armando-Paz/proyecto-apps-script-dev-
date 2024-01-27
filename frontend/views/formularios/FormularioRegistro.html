@@ -3,6 +3,9 @@
 function FormularioRegistro() {
     const guardarFormulario = (datosFormulario) => {
         console.log(datosFormulario);
+        google.script.run.withSuccessHandler(resp => {
+            console.log(resp.titulo);
+        }).guardarUsuario(datosFormulario);
 
     }
     return (
@@ -14,7 +17,7 @@ function FormularioRegistro() {
                 layout="vertical">
 
                 <Item
-                    name="apellidos"
+                    name="usuario_apellidos"
                     label="Apellidos"
                     rules={[
     
@@ -24,7 +27,7 @@ function FormularioRegistro() {
                     <Input />
                 </Item>
                 <Item 
-                name="nombres" 
+                name="usuario_nombres" 
                 label="Nombres"
                     rules={[
 
@@ -35,7 +38,7 @@ function FormularioRegistro() {
                 </Item>
 
                 <Item
-                    name="correo"
+                    name="usuario_email"
                     label="Email"
                     rules={[
                         { type: "email", message: "el formato no corresponde a un email" },
@@ -45,7 +48,7 @@ function FormularioRegistro() {
                     <Input />
                 </Item>
                 <Item 
-                name="contrasenia" 
+                name="usuario_password" 
                 label="Contraseña"
                     rules={[
 
