@@ -1,22 +1,38 @@
 //<script type="text/jsx">
 
 function UsuarioRegistro() {
+
+    const [form] = Form.useForm();
+
     const RegistrarUsuario = (datosFormulario) => {
         console.log(datosFormulario);
-        google.script.run.withSuccessHandler(resp => {
-            console.log(resp.titulo);
+        notificacionGuardando("Grabando Registro");
+        google.script.run.withSuccessHandler(({titulo,descripcion}) => {
+          //  console.log(resp.titulo);
+          //console.log(form);
+          console.log(datosFormulario);
+          onreset();
+          console.log(datosFormulario);
+            notificacionTareaTerminada(titulo,descripcion);
+           
         }).RegistrarUsuario(datosFormulario);
+        
+    };
+    const onreset =()=>{
+        form.resetFields();
+    };
 
-    }
     return (
-
+        <Form 
+            form={form}
+            onFinish={RegistrarUsuario}
+            layout="vertical"
+        >
         <div className="px-20">
             <h2 className="text-center font-bold text-xl my-6">Registrarse</h2>
-            <Form name="basic"
-                onFinish={RegistrarUsuario}
-                layout="vertical">
+          
 
-                <Item
+                <Form.Item
                     name="usuario_apellidos"
                     label="Apellidos"
                     rules={[
@@ -25,8 +41,8 @@ function UsuarioRegistro() {
                     ]}
                     >
                     <Input />
-                </Item>
-                <Item 
+                </Form.Item>
+                <Form.Item 
                 name="usuario_nombres" 
                 label="Nombres"
                     rules={[
@@ -35,9 +51,9 @@ function UsuarioRegistro() {
                     ]}
                 >
                     <Input />
-                </Item>
+                </Form.Item>
 
-                <Item
+                <Form.Item
                     name="usuario_email"
                     label="Email"
                     rules={[
@@ -46,8 +62,8 @@ function UsuarioRegistro() {
                     ]}
                 >
                     <Input />
-                </Item>
-                <Item 
+                </Form.Item>
+                <Form.Item 
                 name="usuario_password" 
                 label="Contraseña"
                     rules={[
@@ -56,13 +72,13 @@ function UsuarioRegistro() {
                     ]}
                 >
                     <Password />
-                </Item>
-                <Item >
+                </Form.Item>
+                <Form.Item >
                     <Button type="primary" htmlType="submit">Guardar</Button>
-                </Item>
-            </Form>
+                </Form.Item>
+            
         </div>
-
+        </Form>
 
     );
 }
