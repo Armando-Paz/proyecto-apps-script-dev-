@@ -1,21 +1,50 @@
 //<script type="text/jsx">
 
     function UsuarioListar() {
-        useEffect(listarUsuarios,[]);
+        const [dataSource,setDataSource]=useState([]);
+        useEffect(ListarUsuarios,[])
         
-        function listarUsuarios(){ 
-        }
-
+        function ListarUsuarios(){ 
+            google.script.run
+            .withSuccessHandler(res => {
+             
+                const xdatausuarios = res.data;
+                let arreglo = [];
+                xdatausuarios.map(usuario => {
+                    arreglo.push({
+                        key:usuario.usuario_id,
+                        ... usuario
+                    })
+                });
+                console.log(arreglo);
+                setDataSource(arreglo);
+            }).ListarUsuarios();
+        };
+        
+          const columns = [
+            {
+              title: 'correo',
+              dataIndex: 'usuario_email',
+              key: 'usuario_email',
+            },
+            {
+              title: 'Apellidos',
+              dataIndex: 'usuario_apellidos',
+              key: 'usuario_apellidos',
+            },
+            {
+              title: 'Nombres',
+              dataIndex: 'usuario_nombres',
+              key: 'usuario_nombres',
+            },
+          ];
+          
+         
       
         
         return (
     
-            <div className="px-20">
-                <h2 className="text-center font-bold text-xl my-6">Listar Usuarios</h2>
-       
-            </div>
-    
-    
+                <Table dataSource={dataSource} columns={columns} />
         );
     }
     

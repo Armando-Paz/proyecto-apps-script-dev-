@@ -5,19 +5,17 @@ function UsuarioRegistro() {
     const [form] = Form.useForm();
 
     const RegistrarUsuario = (datosFormulario) => {
-        console.log(datosFormulario);
+      //  console.log(datosFormulario);
         notificacionGuardando("Grabando Registro");
         google.script.run.withSuccessHandler(({titulo,descripcion}) => {
-          //  console.log(resp.titulo);
-          //console.log(form);
-          console.log(datosFormulario);
+ 
+         // console.log(datosFormulario);
           onreset();
-          console.log(datosFormulario);
+         // console.log(datosFormulario);
             notificacionTareaTerminada(titulo,descripcion);
            
         }).RegistrarUsuario(datosFormulario);
-        
-    };
+            };
     const onreset =()=>{
         form.resetFields();
     };
