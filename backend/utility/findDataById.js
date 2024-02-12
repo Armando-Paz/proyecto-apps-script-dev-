@@ -12,8 +12,8 @@ function findDataById(props) {
     var sheet = obtenerSheet(nameSheet);
 
     var data;
-   Logger.log("findDataByID");
-   Logger.log(props);
+//    Logger.log("findDataByID:Resolviendo...");
+//    Logger.log(props);
 
     if (sheet) {
         data = sheet.getDataRange().getValues();

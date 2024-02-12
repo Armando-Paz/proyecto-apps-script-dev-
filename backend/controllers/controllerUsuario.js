@@ -1,6 +1,43 @@
-function RegistrarUsuario(usuario) {
+function registrarUsuario(usuario_id,usuario) {
     // desestructurando los datos de objeto usuario que esta recibiendo
-    //  Logger.log(usuario);
+
+   
+        Logger.log("Prueba registrarUsuario:"+id)
+        if (id==undefined){
+            return  nuevoUsuario(usuario)
+        }else{
+     
+           return actualizarUsuario(usuario_id,usuario)
+        }
+};
+
+function listarUsuarios(id = undefined) {
+
+    //const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
+    //return obtenerDatos(env_().SH_REGISTRO_USUARIO);
+
+   
+    Logger.log(id);
+    if (id){
+        //var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios" }
+        var datossearch= {    "action" : "findDataById",    "nameSheet": "usuarios",    "id" : id,  "nameId":"usuario_id"    }
+
+        const resulta = JSON.parse(findDataById(datossearch));
+        return resulta;
+    }else{
+        var datosvalidar = { "action": "findAllByNamesheet", "nameSheet": "usuarios" }
+        const resulta = JSON.parse(findAllByNamesheet(datosvalidar));
+        return resulta;
+    }
+    
+    //var status = resulta.status;
+   // Logger.log(resulta);
+
+    
+
+};
+function nuevoUsuario(usuario)
+{
     try {
         const {
             usuario_id = generarIdUnico2(),
@@ -76,30 +113,11 @@ function RegistrarUsuario(usuario) {
             titulo: "Ops ha ocurrido un error! " + error,
         }
     }
-
-
-
 };
-
-function ListarUsuarios() {
-
-    const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
-    //return obtenerDatos(env_().SH_REGISTRO_USUARIO);
-
-    var datosvalidar = { "action": "findAllByNamesheet", "nameSheet": "usuarios" }
-    //Logger.log(datosvalidar);
-    const resulta = JSON.parse(findAllByNamesheet(datosvalidar));
-    var status = resulta.status;
-    //Logger.log(resulta);
-
-    return resulta;
-
-};
-
-function actualizar(datosActualizar) {
+function actualizarUsuario(usuario_id,datosActualizar) {
     var dta = JSON.parse(datosActualizar)
     console.log(dta);
-    var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": dta.usuario_email, "nameId": "usuario_email" }
+    var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": usuario_id, "nameId": "usuario_id" }
     const resulta = JSON.parse(findDataById(datosvalidar));
 
     console.log(resulta);

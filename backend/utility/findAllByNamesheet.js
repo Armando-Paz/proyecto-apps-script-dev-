@@ -28,7 +28,7 @@ function findAllByNamesheet(props) {
         reduced.row = indx + 2;
         return reduced;
     });
-    Logger.log(resultado);
+    //Logger.log(resultado);
     return JSON.stringify({
         status: "ok",
         message: "Resultados encontados",

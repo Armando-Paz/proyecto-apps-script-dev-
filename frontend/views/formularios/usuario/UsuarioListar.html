@@ -1,52 +1,65 @@
 //<script type="text/jsx">
 
-    function UsuarioListar() {
-        const [dataSource,setDataSource]=useState([]);
-        useEffect(ListarUsuarios,[])
-        
-        function ListarUsuarios(){ 
-            google.script.run
+function UsuarioListar() {
+    const [dataSource, setDataSource] = useState([]);
+    useEffect(listarUsuarios, []);
+    const history = useHistory();
+
+    function listarUsuarios() {
+        google.script.run
             .withSuccessHandler(res => {
-             
                 const xdatausuarios = res.data;
                 let arreglo = [];
                 xdatausuarios.map(usuario => {
                     arreglo.push({
-                        key:usuario.usuario_id,
-                        ... usuario
+                        key: usuario.usuario_id,
+                        ...usuario,
+                        acciones:
+                            <Button
+                                onClick={() => {
+                                    console.log(usuario);
+                                    history.push("/usuarioRegistro/" + usuario.usuario_id);
+                                }}>
+                                Editar
+                            </Button>
                     })
-                });
-                console.log(arreglo);
+                })
+                //console.log(arreglo);
                 setDataSource(arreglo);
-            }).ListarUsuarios();
-        };
-        
-          const columns = [
-            {
-              title: 'correo',
-              dataIndex: 'usuario_email',
-              key: 'usuario_email',
-            },
-            {
-              title: 'Apellidos',
-              dataIndex: 'usuario_apellidos',
-              key: 'usuario_apellidos',
-            },
-            {
-              title: 'Nombres',
-              dataIndex: 'usuario_nombres',
-              key: 'usuario_nombres',
-            },
-          ];
-          
-         
-      
-        
-        return (
-    
-                <Table dataSource={dataSource} columns={columns} />
-        );
+            }).listarUsuarios();
     }
-    
-    
-    //</script>
+
+    const columns = [
+        {
+            title: 'correo',
+            dataIndex: 'usuario_email',
+            key: 'usuario_email',
+        },
+        {
+            title: 'Apellidos',
+            dataIndex: 'usuario_apellidos',
+            key: 'usuario_apellidos',
+        },
+        {
+            title: 'Nombres',
+            dataIndex: 'usuario_nombres',
+            key: 'usuario_nombres',
+        },
+        {
+            title: 'Acciones',
+            dataIndex: 'acciones',
+            key: 'acciones',
+        },
+    ];
+
+
+
+
+    return (
+
+        <Table dataSource={dataSource} columns={columns} />
+    );
+}
+
+
+//</script>

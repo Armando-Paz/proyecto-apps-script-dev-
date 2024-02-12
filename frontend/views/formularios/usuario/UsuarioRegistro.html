@@ -1,0 +1,119 @@
+//<script type="text/jsx">
+
+function UsuarioRegistro() {
+
+    const [form] = Form.useForm();
+   // console.log(useParams);
+    const { usuario_id } = useParams();
+    console.log("prueba:"+usuario_id);     
+    const [initialValues, SetInitialValues] = useState([null]);
+
+    useEffect(() => {
+        if (usuario_id) {
+            google.script.run
+                .withSuccessHandler(res => {
+                    //console.log(res);
+                    const usuario = res.data;
+                   // console.log(usuario);
+                    SetInitialValues(usuario);
+                   
+                
+                }).listarUsuarios(usuario_id);
+        }
+
+    }, [])
+
+    const guardarFormulario = (datosFormulario) => {
+        //  console.log(datosFormulario);
+        notificacionGuardando("Grabando Registro");
+ 
+        google.script.run.withSuccessHandler(({ titulo, descripcion }) => {
+            notificacionTareaTerminada(titulo, descripcion);
+            SetInitialValues(null);
+        // console.log(datosFormulario);
+        onreset();
+        // console.log(datosFormulario);
+        }).registrarUsuario(usuario_id,datosFormulario);
+      
+    }
+    const onreset = () => {
+        form.resetFields();
+    }
+    const Formulario = () => {
+        return (
+            <Form
+                initialValues={initialValues}
+                form={form}
+                onFinish={guardarFormulario}
+                layout="vertical"
+            >
+
+
+                <Form.Item
+                    name="usuario_apellidos"
+                    label="Apellidos"
+                    rules={[
+
+                        { required: true, message: "el campo de Apellidos  es Requerido para el registro" }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="usuario_nombres"
+                    label="Nombres"
+                    rules={[
+
+                        { required: true, message: "el campo de Nombres es Requerido para el registro" }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item
+                    name="usuario_email"
+                    label="Email"
+                    rules={[
+                        { type: "email", message: "el formato no corresponde a un email" },
+                        { required: true, message: "el campo de correo es Requerido para el registro" }
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="usuario_password"
+                    label="Contraseña"
+                    rules={[
+
+                        { required: true, message: "el campo de contraseña es Requerido para el registro" }
+                    ]}
+                >
+                    <Password />
+                </Form.Item>
+                <Form.Item >
+                    <Button type="primary" htmlType="submit">Guardar</Button>
+                </Form.Item>
+
+
+            </Form>
+
+        )
+    }
+
+    return (
+
+        <div className="px-20">
+            <h2 className="text-center font-bold text-xl my-6">Registrarse</h2>
+            {
+                (usuario_id && initialValues)
+                ?<Formulario/>
+                :<Formulario/>
+            }
+        </div>
+
+
+    )
+}
+
+
+//</script>

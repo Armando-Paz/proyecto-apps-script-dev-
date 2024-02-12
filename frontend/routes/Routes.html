@@ -8,8 +8,9 @@
              <Header/>
             <Switch>
                 <Route exact path="/" component={Inicio} />
-                <Route exact path="/usuarioListar/:id?" component={UsuarioListar} />
-                <Route exact path="/usuarioRegistro" component={UsuarioRegistro} />
+              
+                <Route exact path="/usuarioRegistro/:usuario_id?" component={UsuarioRegistro} />
+                <Route exact path="/usuarioListar" component={UsuarioListar} />
             </Switch>
         </Router>
         );
