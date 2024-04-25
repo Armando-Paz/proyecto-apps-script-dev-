@@ -14,6 +14,7 @@ function updateObjectInSheet(props) {
     var headers = table.getDataRange().getValues().shift();
     var data = JSON.parse(findDataById({ nameSheet: nameSheet, id: id, nameId: nameId })).data;
     var numeroFila = data.row;
+    console.log("updateObjetSheet:",datos);
     if (!headers) {
         Logger.log("Error: No se encontraron los headers de la tabla");
         return JSON.stringify(  {status: error(404,"cabeceras "),data:null}); //404 cabeceras  no existe
@@ -24,5 +25,5 @@ function updateObjectInSheet(props) {
             datos[key] &&
             table.getRange(numeroFila, numeroColumna).setValue(datos[key]);
     }
-    return JSON.stringify(  {status: error(200,"Actualizado "),data:datos}); //created 
+    return JSON.stringify(  {status: error(200,"Actualizado 20240323 "),data:datos}); //created 
 }

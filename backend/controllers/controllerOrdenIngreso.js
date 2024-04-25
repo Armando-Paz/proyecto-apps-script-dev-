@@ -1,14 +1,14 @@
-function registrarUsuario(usuario_id,usuario) {
-    // desestructurando los datos de objeto usuario que esta recibiendo
+function registrarOrdenIngreso(ordenIngreso_id,ordenIngreso) {
+    // desestructurando los datos de objeto ordenIngreso que esta recibiendo
 
    
-        console.log("registrarUsuario:"+usuario_id);
-        console.log("registrarUsuario:",usuario);
-        if (usuario_id==undefined|usuario_id==null){
-            return  nuevoUsuario(usuario)
+        console.log("registrarOrdenIngreso:"+ordenIngreso_id);
+        console.log("registrarOrdenIngreso:",ordenIngreso);
+        if (ordenIngreso_id==undefined|ordenIngreso_id==null){
+            return  nuevoOrdenIngreso(ordenIngreso)
         }else{ 
      
-           return actualizarUsuario(usuario_id,usuario)
+           return actualizarOrdenIngreso(ordenIngreso_id,ordenIngreso)
         }
 };
 
@@ -21,7 +21,7 @@ function listarUsuarios(id = undefined) {
     Logger.log("listarUsuarios:",id);
     if (id){
         //var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios" }
-        var datossearch= {    "action" : "findDataById",    "nameSheet": "usuarios",    "id" : id,  "nameId":"usuario_id"    }
+        var datossearch= {    "action" : "findDataById",    "nameSheet": "usuarios",    "id" : id,  "nameId":"ordenIngreso_id"    }
 
         const resulta = JSON.parse(findDataById(datossearch));
         return resulta;
@@ -37,12 +37,12 @@ function listarUsuarios(id = undefined) {
     
 
 };
-function nuevoUsuario(usuario)
+function nuevoOrdenIngreso(ordenIngreso)
 {
-    console.log("nuevoUsuario:",usuario);
+    console.log("nuevoOrdenIngreso:",ordenIngreso);
     try {
         // const {
-        //     usuario_id = generarIdUnico2(),
+        //     ordenIngreso_id = generarIdUnico2(),
         //     usuario_email,
         //     usuario_nombres,
         //     usuario_apellidos,
@@ -56,9 +56,9 @@ function nuevoUsuario(usuario)
         //     // usuario_estado,
         //     // usuario_nacimiento,
         //     // usuario_edad 
-        // } = usuario;
+        // } = ordenIngreso;
 
-        var dta = JSON.parse(usuario)
+        var dta = JSON.parse(ordenIngreso)
         console.log(dta);
         var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": dta.usuario_email, "nameId": "usuario_email" }
         console.log("nuevoUsuario_datosvalidar:",datosvalidar);
@@ -72,7 +72,7 @@ function nuevoUsuario(usuario)
             // saveObjectInSheet(props) {
             // const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
             // sheetUsuarios.appendRow([
-            //     usuario_id,
+            //     ordenIngreso_id,
             //     usuario_email,
             //     usuario_nombres,
             //     usuario_apellidos,
@@ -81,14 +81,14 @@ function nuevoUsuario(usuario)
                 var datos2 = {
                     "action": "saveObjectInSheet",
                     "datos": {
-                        "usuario_id": generarIdUnico2(),
+                        "ordenIngreso_id": generarIdUnico2(),
                         "usuario_email": dta.usuario_email,
                         "usuario_nombres": dta.usuario_nombres,
                         "usuario_apellidos": dta.usuario_apellidos,
                         "usuario_password": dta.usuario_password,
-                       // "usuario_codigo_telefono": usuario.usuario_codigo_telefono,
-                       // "usuario_numerotelefono": usuario.usuario_numerotelefono,
-                        //"usuario_aceptacontrato": usuario.usuario_aceptacontrato,
+                       // "usuario_codigo_telefono": ordenIngreso.usuario_codigo_telefono,
+                       // "usuario_numerotelefono": ordenIngreso.usuario_numerotelefono,
+                        //"usuario_aceptacontrato": ordenIngreso.usuario_aceptacontrato,
                         "usuario_aceptacontrato": true,
                         "usuario_aceptakookies": true,
                         "usuario_seguridad": "",
@@ -100,7 +100,7 @@ function nuevoUsuario(usuario)
                 resultado = saveObjectInSheet(datos2);
                 //return (resultado);
           
-            console.log("nuevoUsuario:","despues de grabar");
+            console.log("nuevoOrdenIngreso:","despues de grabar");
 
             return {
                 titulo: "Registro exitoso",
@@ -117,13 +117,13 @@ function nuevoUsuario(usuario)
         }
     }
 };
-function actualizarUsuario(usuario_id,datosActualizar) {
+function actualizarOrdenIngreso(ordenIngreso_id,datosActualizar) {
 
-    console.log("actualizarUsuario:",usuario_id,datosActualizar);
+    console.log("actualizarOrdenIngreso:",ordenIngreso_id,datosActualizar);
 
    var dta = JSON.parse(datosActualizar)
-    console.log("actualizarUsuario 2:",dta);
-    var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": usuario_id, "nameId": "usuario_id" }
+    console.log("actualizarOrdenIngreso 2:",dta);
+    var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": ordenIngreso_id, "nameId": "ordenIngreso_id" }
     const resulta = JSON.parse(findDataById(datosvalidar));
 
     console.log("actualizarUsuario_REsultado:",resulta.data);
@@ -137,7 +137,7 @@ function actualizarUsuario(usuario_id,datosActualizar) {
     if (status.code == 302) {
         var datos2 = {
             "action": "updateObjectInSheet",
-            "id": usuario_id,
+            "id": ordenIngreso_id,
             "datos": {
                 "usuario_email": dta.usuario_email,
                 "usuario_nombres": dta.usuario_nombres,
@@ -150,7 +150,7 @@ function actualizarUsuario(usuario_id,datosActualizar) {
                 "usuario_seguridad": "",
                 "usuario_fotografia": "",
             },
-            "nameId": "usuario_id",
+            "nameId": "ordenIngreso_id",
             "nameSheet": "usuarios"
         }
         console.log("actualizarUsuario_datos2:",datos2);

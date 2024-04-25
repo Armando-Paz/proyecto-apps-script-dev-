@@ -1,0 +1,134 @@
+//<script type="text/jsx">
+
+    function OrdenIngresoRegistro() {
+    
+        const [form] = Form.useForm();
+       // console.log(useParams);
+        const { OrdenIngreso_id } = useParams();
+        const history = useHistory();
+        console.log("OrdenIngreso:"+OrdenIngreso_id);     
+        const [initialValues, SetInitialValues] = useState([null]);
+    
+        useEffect(() => {
+            if (OrdenIngreso_id) {
+                google.script.run
+                    .withSuccessHandler(res => {
+                        const OrdenIngreso = res.data;
+                        SetInitialValues(OrdenIngreso);
+                    }).listarOrdenIngreso(OrdenIngreso_id);
+            }
+    
+        }, []);
+    
+        const guardarFormulario = (datosFormulario) => {
+            //  console.log(datosFormulario);
+           // const history = useHistory();
+            notificacionGuardando("Guardando Orden Ingreso");
+            if (OrdenIngreso_id){
+                google.script.run
+                    .withSuccessHandler(({ titulo, descripcion }) => {
+                        notificacionTareaTerminada(titulo, descripcion);
+                        SetInitialValues(null);
+                        form.resetFields();
+                        history.push("/usuarioRegistro");
+                    }).registrarOrdenIngreso(OrdenIngreso_id,JSON.stringify(datosFormulario));
+                } else {
+                    google.script.run
+                    .withSuccessHandler(({ titulo, descripcion }) => {
+                        notificacionTareaTerminada(titulo, descripcion);
+                        if(descripcion!=302){
+                            SetInitialValues(undefined);
+                            onReset();
+                        }
+                        
+                        //;
+                    // console.log(datosFormulario);
+                      
+                        
+                   
+                    // console.log(datosFormulario);
+                    }).registrarOrdenIngreso(null,JSON.stringify(datosFormulario));
+    
+                }
+        };
+        const onReset = () => {
+            form.resetFields();
+            
+               };
+        const onValidacioEmail = ()=>{
+            notificacionGuardando("Validando OrdenIngreso");
+        };
+        const Formulario = () => {
+            return (
+                <Form
+                    initialValues={initialValues}
+                 
+                    form={form}
+                    onFinish={guardarFormulario}
+                    layout="vertical" 
+                    style={{ maxWidth: 600 }}
+                >
+    
+                    <Form.Item
+                        name="usuario_apellidos"
+                        label="Apellidos"
+                        rules={[
+    
+                            { required: true, message: "el campo de Apellidos  es Requerido para el registro" }
+                        ]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="usuario_nombres"
+                        label="Nombres"
+                        rules={[
+                            { required: true, message: "el campo de Nombres es Requerido para el registro" }
+                        ]}>
+                        <Input />
+                    </Form.Item>
+    
+                    <Form.Item
+                        name="usuario_email"
+                        label="Email"
+                        rules={[
+                            { type: "email", message: "el formato no corresponde a un email" },
+                            { required: true, message: "el campo de correo es Requerido para el registro" }
+                        ]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="usuario_password"
+                        label="Contraseña"
+                        rules={[
+                            { required: true, message: "el campo de contraseña es Requerido para el registro" }
+                        ]}>
+                        <Password />
+                    </Form.Item>
+                    <Form.Item >
+                        <Button  type="primary" htmlType="submit">Guardar</Button >
+                        <Button  htmlType="button" onClick={onReset}>Limpiar</Button >
+                        <Button  disabled htmlType="button" onClick={onValidacioEmail}>enviar confirmacion email</Button >
+                    </Form.Item>
+    
+                </Form>
+    
+            )
+        }
+    
+        return (
+    
+            <div className="px-20">
+                <h2 className="text-center font-bold text-xl my-6">Registrarse</h2>
+                {
+                    (OrdenIngreso_id && initialValues)
+                    ?<Formulario/>
+                    :<Formulario/>
+                }
+            </div>
+    
+    
+        );
+    };
+    
+    
+    //</script>

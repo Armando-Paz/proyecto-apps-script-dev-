@@ -4,7 +4,7 @@ function UsuarioListar() {
     const [dataSource, setDataSource] = useState([]);
     useEffect(listarUsuarios, []);
     const history = useHistory();
-
+    //const navigate=useNavigate()
     function listarUsuarios() {
         google.script.run
             .withSuccessHandler(res => {
@@ -17,8 +17,9 @@ function UsuarioListar() {
                         acciones:
                             <Button
                                 onClick={() => {
-                                    console.log(usuario);
-                                    history.push("/usuarioRegistro/" + usuario.usuario_id);
+                                    console.log("UsuarioListar:",usuario);
+                                   history.push("/usuarioRegistro/" + usuario.usuario_id);
+                                   //navigate("/usuarioRegistro/" + usuario.usuario_id);
                                 }}>
                                 Editar
                             </Button>
