@@ -1,0 +1,101 @@
+//<script type="text/jsx">
+function Login(setUser) {
+    const [form] = Form.useForm()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    const onFinish = (datosFormulario) => {
+        // datosFormulario.preventDefault() 
+        if (email === "" || password === "") {
+            setError(true)
+            return
+        }
+        setError(false)
+        setUser([email])
+
+    }
+
+    const FormularioLogin = () => {
+        return (
+            <section>
+                <Form
+                    form={form}
+                    name="horizontal_login"
+
+                    layout="inline"
+
+                    onFinish={onFinish}
+                >
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Ingresar  email !',
+                            },
+                        ]}
+                    >
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Por favor Ingresar tu Clave!',
+                            },
+                        ]}
+                    >
+                        <Input
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            type="password"
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="recuerdame"
+                        valuePropName="checked"
+
+                        noStyle>
+                        <a alt="saludos">
+                            <Checkbox > </Checkbox>
+                        </a>
+
+                    </Form.Item>
+
+                    <Form.Item shouldUpdate>
+                        {() => (
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                            // disabled={
+                            //   !clientReady ||
+                            //   !form.isFieldsTouched(true) ||
+                            //   !!form.getFieldsError().filter(({ errors }) => errors.length).length
+                            // }
+                            >
+                                Ingresar
+                            </Button>
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+
+                        <a className="login-form-forgot" href="">
+                            Password Olvidado
+                        </a>
+                    </Form.Item>
+                </Form>
+            </section>
+        )
+    }
+    return (
+        <div className="px-20">
+
+            {
+
+                <FormularioLogin />
+
+            }
+        </div>)
+}
+//</script>

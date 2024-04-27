@@ -5,8 +5,16 @@
  * @param {object} props { id: string, datos: string, nameSheet: string, nameId: string }
  */
 function updateObjectInSheet(props) {
-    var id = props.id, datos = props.datos, nameSheet = props.nameSheet, nameId = props.nameId;
+    var id = props.id;
+    var datos = props;
+    var nameSheet = props.nameSheet;
+    var nameId = props.nameId;
+    var datosActualizar = props.datosActualizar;
+    console.log("id:",id);
+    console.log("id:",id);
     var table = obtenerSheet(nameSheet);
+
+    
     if (!table) {
         console.log("Error: la tabla no fue encontrada");
         return JSON.stringify(  {status: error(404,"Hoja "),data:null}); //404 hoja no existe
@@ -19,11 +27,11 @@ function updateObjectInSheet(props) {
         Logger.log("Error: No se encontraron los headers de la tabla");
         return JSON.stringify(  {status: error(404,"cabeceras "),data:null}); //404 cabeceras  no existe
     }
-    for (var key in datos) {
+    for (var key in datosActualizar) {
         var numeroColumna = headers.indexOf(key) + 1;
         numeroColumna > 0 &&
-            datos[key] &&
-            table.getRange(numeroFila, numeroColumna).setValue(datos[key]);
+            datosActualizar[key] &&
+            table.getRange(numeroFila, numeroColumna).setValue(datosActualizar[key]);
     }
-    return JSON.stringify(  {status: error(200,"Actualizado 20240323 "),data:datos}); //created 
+    return JSON.stringify(  {status: error(200,"Actualizado ok "),data}); //created 
 }

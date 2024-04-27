@@ -205,6 +205,67 @@ function eliminar(datosEliminar) {
     }
 
 };
+function validarLogin(login_email,datosValidar) {
+    var dta = JSON.parse(datosValidar)
+    console.log("datosValdiar:",datosValidar);
+    console.log("login_email:",login_email);
+   
+    var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios", "id": dta.login_email, "nameId": "usuario_email" }
+    const resulta = JSON.parse(findDataById(datosvalidar));
+
+    console.log(resulta);
+
+    var datos = resulta.data;
+    var status = resulta.status;
+
+
+    console.log(status.code);
+    console.log(status.message);
+    console.log("====");
+    if (status.code == 302) {
+
+        if(dta.login_password == resulta.data.usuario_password){
+            console.log("password correcto");
+            var datos2 = {
+                "action": "updateObjectInSheet",
+                "id": dta.login_email,
+                "nameId": "usuario_email",
+                "nameSheet": "usuarios",
+                datosActualizar:{
+                    "usuario_ultimoingreso": "2024-04-25",
+                    "usuario_hora" :"02:46",
+                    "usuario_aceptacontrato":"falso"
+                }
+            }
+            resultado = updateObjectInSheet(datos2);
+
+
+            console.log("resultado:",resultado);
+      
+            //return JSON.stringify({ status: error(200, "", "ingreso ok"), data: datosValidar }); //404 datos no existen
+            return {
+                titulo: "ingreso permitidoo ",
+                descripcion : status.code
+            }
+
+        }else{
+            return {
+                titulo: "usuario o password errado ",
+                descripcion : status.code
+            }
+           // return JSON.stringify({ status: error(401, "", "usuario o password errado"), data: datosValidar }); //404 datos no existen
+        }
+    }
+    else {
+        // return JSON.stringify({ status: error(404, "", "No se puede Ingresar"), data: datos }); //404 datos no existen
+        return {
+            titulo: "ingreso no permitido ",
+            descripcion : status.code
+        }
+
+    }
+
+};
 function enviarEmailValidacion()
 {
     const destinatario ="amantari@gmail.com";

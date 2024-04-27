@@ -1,0 +1,141 @@
+//<script type="text/jsx">
+function Login2() {
+  const [form] = Form.useForm();
+  // console.log(useParams);
+  const { login_email } = useParams();
+  const history = useHistory();
+  console.log("login_email:" + login_email);
+  const [initialValues, SetInitialValues] = useState([null]);
+  const onFinish = (datosFormulario) => {
+      console.log(datosFormulario);
+   // const history = useHistory();
+    //notificacionGuardando("Ingresando Login");
+    if (login_email) {
+      google.script.run
+        .withSuccessHandler(({ titulo, descripcion }) => {
+        
+          if (descripcion == 302) {
+           // SetInitialValues(undefined);
+           notificacionTareaTerminada(titulo, descripcion);
+            navigate("/usuarioRegistro/" );
+                        // onReset();
+          }
+          //SetInitialValues(null);
+          //form.resetFields();
+          //history.push("/Inicio");
+        }).validarLogin(login_email, JSON.stringify(datosFormulario));
+    } 
+    else {
+      google.script.run
+        .withSuccessHandler(({ titulo, descripcion }) => {
+           notificacionTareaTerminada(+"dd", descripcion);
+       
+          // if (descripcion != 302) {
+          //   SetInitialValues(undefined);
+          //   // onReset();
+          // }
+
+          //;
+          // console.log(datosFormulario);
+
+
+
+          // console.log(datosFormulario);
+        }).validarLogin(null, JSON.stringify(datosFormulario));
+
+    }
+  };
+  const FormularioLogin = () => {
+    return (
+      <Form 
+        form={form}
+        name="horizontal_login"
+        initialValues={{ login_recuerdame: true }}
+        layout="inline"
+        
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="login_email"
+          rules={[
+            {
+              required: true,
+              message: 'Ingresar  email !',
+            },
+          ]}
+        >
+          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+        </Form.Item>
+        <Form.Item
+          name="login_password"
+          rules={[
+            {
+              required: true,
+              message: 'Por favor Ingresar tu Clave!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item
+          name="login_recuerdame"
+          valuePropName="checked" 
+
+          noStyle>
+            <a alt="saludos">
+            <Checkbox > </Checkbox>
+            </a>
+         
+        </Form.Item>
+
+        <Form.Item shouldUpdate>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+            // disabled={
+            //   !clientReady ||
+            //   !form.isFieldsTouched(true) ||
+            //   !!form.getFieldsError().filter(({ errors }) => errors.length).length
+            // }
+            >
+              Ingresar
+            </Button>
+          )}
+        </Form.Item>
+        <Form.Item>
+
+          <a className="login-form-forgot" href="">
+            Password Olvidado
+          </a>
+        </Form.Item>
+      </Form>
+    )
+  }
+  const FormularioError =() =>{
+   // history.push("/Header");
+    return (
+      history.push("/Inicio")
+    //navigate("/usuarioRegistro/")
+   
+    )
+  }
+  return (
+
+    <div className="px-20">
+      {/* <h2 className="text-center font-bold text-xl my-6">Login</h2> */}
+      {
+        (login_email && initialValues)
+          ? <FormularioLogin />
+          : <FormularioLogin />
+      }
+    </div>
+
+
+  );
+};
+//</script>

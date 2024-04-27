@@ -1,12 +1,23 @@
 //<script type="text/jsx">
 
-function App(){
+function App() {
+    const [user, setUser] = useState([])
+    console.log("user:" , user)
+    return (
+        <div >
+            {
+              
+                 <Login setUser={setUser}/>
+                 
+                // : <Routes />
 
-    return(
-        <Routes/>
+            }
+           <h3>{user}</h3>
+        </div>
+
     )
 }
 
-ReactDOM.render(<App/> , document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 //</script>

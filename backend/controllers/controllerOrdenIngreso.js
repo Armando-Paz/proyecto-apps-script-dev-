@@ -12,13 +12,13 @@ function registrarOrdenIngreso(ordenIngreso_id,ordenIngreso) {
         }
 };
 
-function listarUsuarios(id = undefined) {
+function listarOrdenIngreso(id = undefined) {
 
     //const sheetUsuarios = obtenerSheet(env_().SH_REGISTRO_USUARIO);
     //return obtenerDatos(env_().SH_REGISTRO_USUARIO);
 
    
-    Logger.log("listarUsuarios:",id);
+    Logger.log("listarOrdenIngreso:",id);
     if (id){
         //var datosvalidar = { "action": "findDataById", "nameSheet": "usuarios" }
         var datossearch= {    "action" : "findDataById",    "nameSheet": "usuarios",    "id" : id,  "nameId":"ordenIngreso_id"    }
